@@ -1,0 +1,25 @@
+parameters:
+    app.api_key: '%env(API_KEY)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            
+    App\EventListener\ApiKeyAuthenticator:
+        arguments:
+            $apiKey: '%app.api_key%'
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 9 }
+            
+    # Register the Product normalizer with a high priority
+    App\Serializer\ProductNormalizer:
+        tags:
+            - { name: 'serializer.normalizer', priority: 1000 }

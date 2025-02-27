@@ -1,0 +1,193 @@
+openapi: 3.0.0
+info:
+  title: Product API
+  version: v1
+
+paths:
+  /products:
+    post:
+      summary: Create a new product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - name
+                - description
+                - price
+              properties:
+                type:
+                  type: string
+                  enum: [physical, digital]
+                  description: The type of product
+                name:
+                  type: string
+                  description: The name of the product
+                description:
+                  type: string
+                  description: The description of the product
+                price:
+                  type: number
+                  format: float
+                  description: The price of the product
+                sku:
+                  type: string
+                  description: The SKU of the product (only for physical products)
+                weight:
+                  type: number
+                  format: float
+                  description: The weight of the product (only for physical products)
+                download_url:
+                  type: string
+                  description: The download URL of the product (only for digital products)
+                file_size:
+                  type: integer
+                  description: The file size of the product in bytes (only for digital products)
+      responses:
+        '201':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    get:
+      summary: Get all products
+      responses:
+        '200':
+          description: List of all products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+  /products/{id}:
+    get:
+      summary: Get a single product by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The ID of the product
+      responses:
+        '200':
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Product not found
+
+    put:
+      summary: Update a product
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The ID of the product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the product
+                description:
+                  type: string
+                  description: The description of the product
+                price:
+                  type: number
+                  format: float
+                  description: The price of the product
+                sku:
+                  type: string
+                  description: The SKU of the product (only for physical products)
+                weight:
+                  type: number
+                  format: float
+                  description: The weight of the product (only for physical products)
+                download_url:
+                  type: string
+                  description: The download URL of the product (only for digital products)
+                file_size:
+                  type: integer
+                  description: The file size of the product in bytes (only for digital products)
+      responses:
+        '200':
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Product not found
+
+    delete:
+      summary: Delete a product
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The ID of the product
+      responses:
+        '204':
+          description: Product deleted successfully
+        '404':
+          description: Product not found
+
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - id
+        - type
+        - name
+        - description
+        - price
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: The ID of the product
+        type:
+          type: string
+          enum: [physical, digital]
+          description: The type of product
+        name:
+          type: string
+          description: The name of the product
+        description:
+          type: string
+          description: The description of the product
+        price:
+          type: number
+          format: float
+          description: The price of the product
+        sku:
+          type: string
+          description: The SKU of the product (only for physical products)
+        weight:
+          type: number
+          format: float
+          description: The weight of the product (only for physical products)
+        download_url:
+          type: string
+          description: The download URL of the product (only for digital products)
+        file_size:
+          type: integer
+          description: The file size of the product in bytes (only for digital products)

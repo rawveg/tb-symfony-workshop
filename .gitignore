@@ -1,0 +1,17 @@
+/.env
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+.phpunit.result.cache
+/phpunit.xml
+/coverage/
+.idea/
+.DS_Store
+Thumbs.db
+/.php-cs-fixer.cache
+/.php-cs-fixer.php
+phpstan.neon

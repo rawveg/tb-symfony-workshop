@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="api-key-section">
+        <h2>API Authentication</h2>
+        <div class="form-group">
+            <label for="api-key">API Key:</label>
+            <input type="text" id="api-key" value="workshop_secret_api_key">
+        </div>
+    </section>
+
+    <section class="products-section">
+        <h2>Products</h2>
+        <button id="load-products" class="btn">Load Products</button>
+        <div id="products-container"></div>
+    </section>
+
+    <section class="add-product-section">
+        <h2>Add New Product</h2>
+        <form id="product-form">
+            <div class="form-group">
+                <label for="product-type">Type:</label>
+                <select id="product-type" required>
+                    <option value="physical">Physical</option>
+                    <option value="digital">Digital</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="product-name">Name:</label>
+                <input type="text" id="product-name" required>
+            </div>
+            <div class="form-group">
+                <label for="product-description">Description:</label>
+                <textarea id="product-description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="product-price">Price:</label>
+                <input type="number" id="product-price" step="0.01" required>
+            </div>
+            
+            <!-- Physical product fields -->
+            <div class="physical-fields">
+                <div class="form-group">
+                    <label for="product-sku">SKU:</label>
+                    <input type="text" id="product-sku">
+                </div>
+                <div class="form-group">
+                    <label for="product-weight">Weight:</label>
+                    <input type="number" id="product-weight" step="0.01">
+                </div>
+            </div>
+            
+            <!-- Digital product fields -->
+            <div class="digital-fields" style="display: none;">
+                <div class="form-group">
+                    <label for="product-download-url">Download URL:</label>
+                    <input type="url" id="product-download-url">
+                </div>
+                <div class="form-group">
+                    <label for="product-file-size">File Size (bytes):</label>
+                    <input type="number" id="product-file-size">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn">Add Product</button>
+        </form>
+    </section>
+
+    <section class="product-details-section" style="display: none;">
+        <h2>Product Details</h2>
+        <div id="product-details"></div>
+        <div class="actions">
+            <button id="edit-product" class="btn">Edit</button>
+            <button id="delete-product" class="btn btn-danger">Delete</button>
+            <button id="back-to-list" class="btn">Back to List</button>
+        </div>
+    </section>
+
+    <section class="edit-product-section" style="display: none;">
+        <h2>Edit Product</h2>
+        <form id="edit-form">
+            <input type="hidden" id="edit-product-id">
+            <input type="hidden" id="edit-product-type">
+            
+            <div class="form-group">
+                <label for="edit-product-name">Name:</label>
+                <input type="text" id="edit-product-name" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-product-description">Description:</label>
+                <textarea id="edit-product-description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="edit-product-price">Price:</label>
+                <input type="number" id="edit-product-price" step="0.01" required>
+            </div>
+            
+            <!-- Physical product fields -->
+            <div class="edit-physical-fields">
+                <div class="form-group">
+                    <label for="edit-product-sku">SKU:</label>
+                    <input type="text" id="edit-product-sku">
+                </div>
+                <div class="form-group">
+                    <label for="edit-product-weight">Weight:</label>
+                    <input type="number" id="edit-product-weight" step="0.01">
+                </div>
+            </div>
+            
+            <!-- Digital product fields -->
+            <div class="edit-digital-fields">
+                <div class="form-group">
+                    <label for="edit-product-download-url">Download URL:</label>
+                    <input type="url" id="edit-product-download-url">
+                </div>
+                <div class="form-group">
+                    <label for="edit-product-file-size">File Size (bytes):</label>
+                    <input type="number" id="edit-product-file-size">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn">Update Product</button>
+            <button type="button" id="cancel-edit" class="btn">Cancel</button>
+        </form>
+    </section>
+
+    <div id="notification" class="notification"></div>
+{% endblock %}
